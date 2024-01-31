@@ -1,4 +1,4 @@
-module github.com/npex42/giftAid
+module github.com/CaptAutism/giftAid
 
 go 1.20
 

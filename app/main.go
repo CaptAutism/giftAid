@@ -26,7 +26,7 @@ func main() {
 
 	db, err := sql.Open("sqlite3", "users.db")
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("Failed To Open / Create Database 'users.db': %q\n", err)
 	}
 
 	defer db.Close()
