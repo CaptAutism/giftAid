@@ -65,3 +65,19 @@ func AddDonor(db *sql.DB, d Donator) (int, error) {
 	defer tx.Commit()
 	return int(affectedCount), nil
 }
+
+func DeleteDonor(db *sql.DB, id int) error {
+	tx, err := db.Begin()
+	if err != nil {
+		return err
+	}
+	defer tx.Commit()
+
+	_, err = db.Exec("DELETE * FROM foo WHERE id = ?", id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

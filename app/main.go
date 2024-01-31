@@ -2,12 +2,14 @@ package main
 
 import (
 	"database/sql"
+	"os"
 	"strconv"
 
 	"fmt"
 	"log"
 	"net/http"
 
+	"github.com/CaptAutism/giftAid/cmd"
 	"github.com/labstack/echo/v4"
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -53,7 +55,7 @@ func main() {
 		return c.String(http.StatusOK, "Hello, World\n")
 	})
 
-	e.GET("/users", func(c echo.Context) error {
+	e.GET("/api/users", func(c echo.Context) error {
 		tx, err := db.Begin()
 		defer tx.Commit()
 		if err != nil {
@@ -85,7 +87,7 @@ func main() {
 		return c.JSON(http.StatusOK, donators)
 	})
 
-	e.POST("/users", func(c echo.Context) error {
+	e.POST("/api/users", func(c echo.Context) error {
 		var donor Donator
 		if err := c.Bind(&donor); err != nil {
 			return err
@@ -106,7 +108,7 @@ func main() {
 		return c.JSON(http.StatusOK, resp)
 	})
 
-	e.PUT("/users/:id", func(c echo.Context) error {
+	e.PUT("/api/users/:id", func(c echo.Context) error {
 		var donor Donator
 		if err := c.Bind(&donor); err != nil {
 			return err
@@ -149,6 +151,8 @@ func main() {
 		return c.JSON(200, donor)
 
 	})
+
+	cmd.Run(os.Args)
 
 	e.Logger.Fatal(e.Start(":8080"))
 }
